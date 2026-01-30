@@ -1,7 +1,10 @@
+# Copper Age Collapse
+
 Written Oct 3, 2022
 
 Premise: History video from the year 5244 AD.  
-https://www.youtube.com/watch?v=aq4G-7v-_xI   The Bronze Age Collapse (approximately 1200 B.C.E.) By Historia Civilis is a major inspiration.
+<https://www.youtube.com/watch?v=aq4G-7v-_xI>  
+The Bronze Age Collapse (approximately 1200 B.C.E.) By Historia Civilis is a major inspiration.
 
 Humans had a large but digital broken unreadable written record during the collapse.  
 There was almost no paper records since it appeared to be on the decline, and much of it was destroyed during the collapse or over the last 3000 years.  
@@ -37,8 +40,6 @@ The last known message to leave Alaska reads:
 Our goods in the manufactories were destroyed, and the farms were ravaged. Our land is sacked. May you know it! May you know it!  
 
 The leader of the united states was well aware of what was happening in Alaska, but he had problems of his own. He was under attack at around the same time.  
-
-
 
 Exploitation of natural resources
 

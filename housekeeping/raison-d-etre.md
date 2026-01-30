@@ -1,3 +1,5 @@
+# Raison D'Etre
+
 I imagine that future people would like to know the thoughts of an everyman in the 2020s.
 
 The most robust form of digital media is Git, so this digital garden should succumb to digital rot slower than others.  
