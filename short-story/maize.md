@@ -1,12 +1,18 @@
 # Maize
 
-Written Aug 3, 2025
+Originally written Aug 3, 2025.
 
-The human domestication of the wild teosinte into maize is a continuous process that started eleven thousand years ago and continues to the present day.
+Consider Maize, staple of populations from A to Zea.
 
-The utter transformation of teosinte is not an affront to natural law and mother nature, rather teosinte evolved to fit the needs of humans.
+The human domestication of the wild teosinte into maize is a continuous process that started eleven millennia ago.
+
+Once a meager grass called teosinte, it is now a cereal, yellow and courageous.
+
+The utter transformation of teosinte is not an affront to natural law, rather teosinte evolved to fit the needs of humans.
 
 Over time, many humans became totally dependent on maize for survival.  
-Maize became totally dependent on humans for reproduction. Because of this, the two species are codependent, in a mutualistic symbiosis.
+In return, maize became totally dependent on humans for reproduction.  
+The two species are codependent, in a mutualistic symbiosis.
 
-In exchange for being an excellent food source for humans, Maize was spread all across Mesoamerica, and later across the whole earth. Given that the goal of life is reproduction, Maize has been incredibly successful.
+For its service to humanity, maize was rewarded by being spread across all the circuit of the earth.
+If the goal of life is reproduction, maize wins amazingly.

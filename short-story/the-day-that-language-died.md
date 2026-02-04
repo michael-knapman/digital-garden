@@ -1,11 +1,18 @@
 # The Day That Language Died
 
-Written January 23, 2025.
+Originally written January 23, 2025.
 
-30 November 2022.  
-Take a look at Wikipedia on November 29. The day before AI generated text. The last day of true human language.  
-AI-ese are all languages made by AI. For example AI english is fawning, pleasing, with a Nigerian accent.  
-"delve" is Ai-ese and also nigerian english.  
+Consider 29 November 2022.  
+The day before ChatGPT was released. The last day of true human language.
+
+Historically, language was modified to fit the needs of people and their technology.
+Telegraphy changed language by introducing encoding, and the desperate need for information density.
+The internet changed language by causing the diffusion of accents, and introducing search engine optimization keywords.
+Generative AI changed language by allowing a dozen models to dictate the correct way of writing.
+
+AI-ese english is fawning, pleasing, and submissive.
+Because of cheap labour, ChatGPT has a Nigerian accent.  
+"delve" is AI-ese and also nigerian english.  
 "You sound like a bot" really could just mean "you sound nigerian".  
 <https://www.fanaticalfuturist.com/2024/11/nigerian-ai-ese-not-english-is-the-primary-language-of-ai/>
 
