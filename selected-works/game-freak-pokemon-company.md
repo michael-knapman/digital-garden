@@ -13,5 +13,5 @@ Selected works from Game Freak and The Pokémon Company in chronological order.
 | Route 216 | Pokemon Diamond | 2006 | Go Ichinose |
 | Temporal Tower | Pokemon Mystery Dungeon Explorers of Time | 2007 | Uncredited |
 | Barren Valley | Pokemon Mystery Dungeon Explorers of Sky | 2009 | Uncredited |
-| ??? | Pokemon Black | 2010 | ??? |
+| Dragonsprial Tower | Pokemon Black | 2010 | Shota Kageyama |
 | Battle! Colress | Pokemon Black 2 | 2012 | Hitomi Sato, Go Ichinose |
