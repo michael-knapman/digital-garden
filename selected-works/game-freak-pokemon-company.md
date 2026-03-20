@@ -15,4 +15,4 @@ Selected works from Game Freak and The Pokémon Company in chronological order.
 | Temporal Tower | Pokemon Mystery Dungeon Explorers of Time | 2007 | Uncredited |
 | Barren Valley | Pokemon Mystery Dungeon Explorers of Sky | 2009 | Uncredited |
 | Dragonsprial Tower | Pokemon Black | 2010 | Shota Kageyama |
-| Battle! Colress | Pokemon Black 2 | 2012 | Hitomi Sato, Go Ichinose |
+| Battle! Colress | Pokemon Black 2 | 2012 | Hitomi Sato |
