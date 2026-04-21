@@ -47,6 +47,8 @@ My favourite Siivagunner songs in rough chronological order.
 * Plok Third Sanctuary BEST <https://www.youtube.com/watch?v=aw3A6mf_07s>
 * Ashens Toy Violin BEST <https://www.youtube.com/watch?v=IfqNJDiIkCQ>
 * Bird Up Dynablade BEST <https://www.youtube.com/watch?v=Q426mVC40vU>
+* Anthology of the killer BEST <https://www.youtube.com/watch?v=f81TjhyHadc>
+* Ripple Field Deltarune BEST <https://www.youtube.com/watch?v=h0tpfN8Sqeo>
 
 * Visuals Jubeat <https://www.youtube.com/watch?v=D4EbPEguCyM>
 * Shop Visuals <https://www.youtube.com/watch?v=HEZV4tVqHuQ>
@@ -285,6 +287,12 @@ My favourite Siivagunner songs in rough chronological order.
 * Kendrick fusion collab <https://www.youtube.com/watch?v=J4N8IIPjP1s>
 * Tiny Tim Sunlight Moonlight <https://www.youtube.com/watch?v=fuvgQR7drBk>
 * Pokey Medley Business <https://www.youtube.com/watch?v=88IfHfV41OE>
+* PMD2 Strike back <https://www.youtube.com/watch?v=9Ua-GnlzdMA>
+* Circus Sigma <https://www.youtube.com/watch?v=N8sS4WJeDPI>
+* 17776 day <https://www.youtube.com/watch?v=9viTaAS5EP0>
+* SSBB Medley <https://www.youtube.com/watch?v=v61cjyfkPPY>
+* Undertale DKC2 <https://www.youtube.com/watch?v=yl3eQPyeEpg>
+* Undertale Waterfall PMD2 <https://www.youtube.com/watch?v=TQo_zSJ93JY>
 
 * VvvvvaVvvvvvr
 * Final Destination BEST <https://www.youtube.com/watch?v=LHwIPpixdNE>
