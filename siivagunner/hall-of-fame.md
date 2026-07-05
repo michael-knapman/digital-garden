@@ -49,6 +49,7 @@ My favourite Siivagunner songs in rough chronological order.
 * Bird Up Dynablade BEST <https://www.youtube.com/watch?v=Q426mVC40vU>
 * Anthology of the killer BEST <https://www.youtube.com/watch?v=f81TjhyHadc>
 * Ripple Field Deltarune BEST <https://www.youtube.com/watch?v=h0tpfN8Sqeo>
+* Freddie Animation BEST <https://www.youtube.com/watch?v=_gJE8POYCYg>
 
 * Visuals Jubeat <https://www.youtube.com/watch?v=D4EbPEguCyM>
 * Shop Visuals <https://www.youtube.com/watch?v=HEZV4tVqHuQ>
@@ -293,9 +294,35 @@ My favourite Siivagunner songs in rough chronological order.
 * SSBB Medley <https://www.youtube.com/watch?v=v61cjyfkPPY>
 * Undertale DKC2 <https://www.youtube.com/watch?v=yl3eQPyeEpg>
 * Undertale Waterfall PMD2 <https://www.youtube.com/watch?v=TQo_zSJ93JY>
+* Explorers of Chrono <https://www.youtube.com/watch?v=L-28tcTavQY>
+* Magolor Strike Back EX <https://www.youtube.com/watch?v=wf-c-1V3BtE>
+* PMD2 Area Zero <https://www.youtube.com/watch?v=ej2rzwjQQ-g>
+* Ocean Man Crab Rave <https://www.youtube.com/watch?v=G2YRJ7CN8rw>
+* Omnilovania <https://www.youtube.com/watch?v=Xv1ctIz8TA4>
+* From Now On Kirby <https://www.youtube.com/watch?v=h0tpfN8Sqeo>
+* Black Knife Silver Surfer <https://www.youtube.com/watch?v=FWdm_yaAWoo>
+* Earthbound sanctuary deltarune <https://www.youtube.com/watch?v=W-PkybFFCSA>
+* Toby Fox deep cut tetris <https://www.youtube.com/watch?v=98vKGQGzDis>
+* Sand Canyon Spider Dance <https://www.youtube.com/watch?v=-1Yu-_zjwoA>
+* Undertale Ruins PMD2 <https://www.youtube.com/watch?v=pusb7LdzvgM>
+* Pinkpantheress Knife <https://www.youtube.com/watch?v=oKQ0C2Ibsyc>
+* Homestuck funkin <https://www.youtube.com/watch?v=k2f3KH4_pMM>
+* Flat Zone APT <https://www.youtube.com/watch?v=zBCKxOF_ugI>
+* Follin and Follin <https://www.youtube.com/watch?v=0chZ6L95F6A>
+* Charlie's Inferno Buy Mode <https://www.youtube.com/watch?v=VdxSu5X0hx8>
+* AI Bomb Plok <https://www.youtube.com/watch?v=AaggcX6-S2Q>
+* Mother 3 Black Knife <https://www.youtube.com/watch?v=HPeFJQ25fb8>
+* PMD2 Dark Sanctuary <https://www.youtube.com/watch?v=5TdjIrX-lr4>
+* Deltarune Majora <https://www.youtube.com/watch?v=Dqxpd4atqhM>
+* Spear of Justice Gerson <https://www.youtube.com/watch?v=S5uILchWU_A>
+* Ducking Hardcore <https://www.youtube.com/watch?v=xqGnz_1pWKM>
+* Undertale Core Roundabout <https://www.youtube.com/watch?v=zyItvNH1OTE>
+* PMD2 Undertale Another Medium <https://www.youtube.com/watch?v=4AGeAzpd-wk>
 
 * VvvvvaVvvvvvr
 * Final Destination BEST <https://www.youtube.com/watch?v=LHwIPpixdNE>
+* Main Theme beiber BEST <https://www.youtube.com/watch?v=ektb0vLIaqI>
+* Main Theme beiber full BEST <https://www.youtube.com/watch?v=Q8h88GDO_QI>
 * Armed Ripper <https://www.youtube.com/watch?v=8CgM-JyCsq4>
 * Discord <https://www.youtube.com/watch?v=nUhcKEH5lkA>
 * Mad Monster <https://www.youtube.com/watch?v=4RZ7va7UaqA>
