@@ -318,6 +318,8 @@ My favourite Siivagunner songs in rough chronological order.
 * Ducking Hardcore <https://www.youtube.com/watch?v=xqGnz_1pWKM>
 * Undertale Core Roundabout <https://www.youtube.com/watch?v=zyItvNH1OTE>
 * PMD2 Undertale Another Medium <https://www.youtube.com/watch?v=4AGeAzpd-wk>
+* Plok Final Destination SSBB <https://www.youtube.com/watch?v=PFn_n-3pDxc>
+* Vylet Pony Antonymph Deltarune <https://www.youtube.com/watch?v=9-kS3jEzVeg>
 
 * VvvvvaVvvvvvr
 * Final Destination BEST <https://www.youtube.com/watch?v=LHwIPpixdNE>
