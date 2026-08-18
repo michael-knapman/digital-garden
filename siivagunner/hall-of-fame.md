@@ -320,6 +320,10 @@ My favourite Siivagunner songs in rough chronological order.
 * PMD2 Undertale Another Medium <https://www.youtube.com/watch?v=4AGeAzpd-wk>
 * Plok Final Destination SSBB <https://www.youtube.com/watch?v=PFn_n-3pDxc>
 * Vylet Pony Antonymph Deltarune <https://www.youtube.com/watch?v=9-kS3jEzVeg>
+* Mario take on me <https://www.youtube.com/watch?v=Mkeeqvv4w50>
+* No more nuzzles <https://www.youtube.com/watch?v=1MIJCZeRzVw>
+* Black knife DKC <https://www.youtube.com/watch?v=8ggBACNegA4>
+
 
 * VvvvvaVvvvvvr
 * Final Destination BEST <https://www.youtube.com/watch?v=LHwIPpixdNE>
