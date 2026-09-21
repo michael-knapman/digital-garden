@@ -65,7 +65,7 @@ SIDEBAR_MARKER_END = "ENDSIDEBAR"
 
 STICKER = (
     '<a href="https://nekoweb.org/">'
-    '<img src="https://nekoweb.org/assets/buttons/button5.gif" alt="Nekoweb">'
+    '<img src="https://nekoweb.org/assets/buttons/button1.gif" alt="Nekoweb">'
     "</a>"
 )
 COPYRIGHT = "Copyright © 2026 Michael Knapman. All Rights Reserved."
