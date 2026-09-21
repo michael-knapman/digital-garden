@@ -30,6 +30,8 @@ What it does
   copyright notice. The page or section you are currently on is
   highlighted. Links are written relative to each page's own folder, so
   pages in subfolders get "../index.html" and so on.
+  On phones (max-width 600px) the sidebar turns into a full-width top bar
+  so the content gets the whole viewport.
 
 The script is idempotent: re-running it replaces any previously injected
 sidebar instead of duplicating it, so it is safe to run after every edit.
@@ -137,9 +139,40 @@ aside.sidebar {
     font-size: 12px;
     color: #6b6559;
 }
+/* Mobile: the sidebar becomes a full-width top bar so the content gets
+   the whole viewport. It sits in normal flow (scrolls away as you read)
+   and scrolls internally if the sitemap outgrows the capped height. */
 @media (max-width: 600px) {
-    :root {
-        --sidebar-width: min(220px, 70vw);
+    body {
+        margin-left: 0;
+    }
+    aside.sidebar {
+        position: static;
+        width: 100%;
+        height: auto;
+        max-height: 32vh;
+        overflow-y: auto;
+        box-sizing: border-box;
+        padding: 8px 10px 10px;
+        border-right: none;
+        border-bottom: 1px solid #d8d2c6;
+    }
+    .sidebar-nav ul {
+        padding-left: 0;
+    }
+    .sidebar-nav ul ul {
+        padding-left: 12px;
+    }
+    .sidebar-nav li {
+        margin: 2px 0;
+    }
+    .sidebar-nav a {
+        padding: 3px 6px;
+        font-size: 13px;
+    }
+    .sidebar-foot {
+        margin-top: 8px;
+        padding-top: 8px;
     }
 }
 """

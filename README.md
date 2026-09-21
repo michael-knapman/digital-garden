@@ -35,6 +35,10 @@ Special folders:
 The build is idempotent: re-running it replaces old injected sidebars
 instead of duplicating them, so run it after every edit.
 
+Mobile: the sidebar is responsive — on phones (max-width 600px) it turns
+into a full-width top bar so the content uses the whole viewport instead
+of a side column.
+
 ## Test step
 
 Test the website in VScode terminal by running:
