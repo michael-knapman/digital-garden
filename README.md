@@ -16,22 +16,26 @@ Files containing unorganized conent not yet on the website is in the "content" f
 
 ## Build step
 
-Run this before `git push` to inject the fixed left-hand sidebar into every
+Run this before git add/commit/push to inject the fixed left-hand sidebar into every
 page in `public/`:
 
     python3 build_site.py
 
-The sidebar shows a sitemap of all the site's pages (generated from their
-`<title>` tags, with `index.html` listed first as "Home"), a Nekoweb sticker
-and a copyright notice. The page you are currently on is highlighted.
+The sidebar is a hierarchical sitemap of the site, generated from the folder
+structure: a page named `<section>.html` acts as the landing page for the
+sibling folder `<section>/`, so pages inside `engineering/` appear as
+children of `engineering.html`. `index.html` is listed first as "Home".
+Links are injected relative to each page's own folder.
 
-The build is idempotent and safe to re-run: old injected sidebars are
-replaced, never duplicated. If you add/rename/remove a page, just run the
-build again before pushing. The deployment workflow pushes `public/` as-is,
-so the sidebar must be in the files *before* you push.
+Special folders:
+- `media/`  - assets only (images, music). Never scanned, no sidebar, not listed.
+- `unlisted/` - secret pages. They get the sidebar but are never listed in it;
+  reach them by typing the URL or exploring the site.
+
+The build is idempotent: re-running it replaces old injected sidebars
+instead of duplicating them, so run it after every edit.
 
 ## Test step
-
 
 Test the website in VScode terminal by running:
     python3 -m http.server 8000 --directory public
@@ -39,7 +43,6 @@ Test the website in VScode terminal by running:
 ## Push step
 
 Simply git push, and the deploy.yml mirrors the code onto the website!
-
 
 
 ## TODO

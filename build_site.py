@@ -8,13 +8,28 @@ Run this BEFORE `git push` (the github workflow deploys public/ as-is):
 
 What it does
 ------------
-* Scans every *.html file in public/.
-* Builds a sitemap from those pages: index.html becomes "Home" and is listed
-  first; every other page follows, labelled with its <title> tag.
-  not_found.html (the 404 page) is excluded from the sitemap.
-* Injects a fixed left-hand sidebar into every page. The sidebar shows the
-  sitemap, a sticker linking to nekoweb.org and a copyright notice.
-  The page you are currently on is highlighted.
+* Scans every *.html file under public/, including subfolders, so the
+  git structure and the webpage structure stay in sync.
+* Builds a hierarchical sitemap from the folder structure. A page named
+  <section>.html is treated as the landing page for the sibling folder
+  <section>/, so pages inside engineering/ are shown as children of
+  engineering.html, e.g.:
+
+      Home (index.html)
+      Cool stuff! (cool_stuff.html)
+      Engineering landing page (engineering.html)
+        Codecs (engineering/codecs.html)
+
+* Excludes special folders from the sitemap:
+  - media/    - assets only (images, music), never webpages
+  - unlisted/ - secret pages you reach by typing the URL or exploring the
+                site; they still get the sidebar, just no link to them.
+  The 404 page (not_found.html) is also left out of the sitemap.
+* Injects a fixed left-hand sidebar into every page (except inside media/).
+  The sidebar shows the sitemap, a sticker linking to nekoweb.org and a
+  copyright notice. The page or section you are currently on is
+  highlighted. Links are written relative to each page's own folder, so
+  pages in subfolders get "../index.html" and so on.
 
 The script is idempotent: re-running it replaces any previously injected
 sidebar instead of duplicating it, so it is safe to run after every edit.
@@ -24,15 +39,22 @@ The injected markup is pure HTML + CSS. No JavaScript is used anywhere.
 """
 
 import pathlib
+import posixpath
 import re
 import sys
+from dataclasses import dataclass, field
 
 ROOT = pathlib.Path(__file__).resolve().parent
 PUBLIC = ROOT / "public"
 
 HOME_LABEL = "Home"
 HOMEPAGE_FILE = "index.html"
-EXCLUDE_FROM_SITEMAP = {"not_found.html"}
+NOT_FOUND_FILE = "not_found.html"
+
+# Folders that are never listed in the sidebar sitemap.
+EXCLUDE_FROM_SITEMAP = {"media", "unlisted"}
+# Folders whose pages do not even get a sidebar injected (pure assets).
+EXCLUDE_FROM_INJECTION = {"media"}
 
 CSS_MARKER_START = "BEGINSIDEBAR:CSS"
 CSS_MARKER_END = "ENDSIDEBAR:CSS"
@@ -74,8 +96,19 @@ aside.sidebar {
     margin: 0;
     padding: 0;
 }
+.sidebar-nav ul ul {
+    padding-left: 14px;
+}
 .sidebar-nav li {
     margin: 4px 0;
+}
+.sidebar-nav li.group > span {
+    display: block;
+    padding: 4px 8px;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: #8a8375;
 }
 .sidebar-nav a {
     display: block;
@@ -112,6 +145,23 @@ aside.sidebar {
 """
 
 
+@dataclass
+class PageNode:
+    """A clickable page in the sitemap."""
+
+    rel_path: str  # posix path relative to PUBLIC, e.g. "engineering/codecs.html"
+    label: str
+    children: list = field(default_factory=list)
+
+
+@dataclass
+class GroupNode:
+    """A non-clickable section heading, used when a folder has no landing page."""
+
+    label: str
+    children: list = field(default_factory=list)
+
+
 def escape_html(text):
     """Escape a page title so it is safe inside HTML markup."""
     return (
@@ -126,47 +176,160 @@ def extract_title(html, filename):
     return filename.removesuffix(".html")
 
 
-def build_sitemap():
-    """Return an ordered list of (filename, label) for the sidebar."""
-    pages = []
-    for path in sorted(PUBLIC.glob("*.html")):
-        if path.name in EXCLUDE_FROM_SITEMAP:
-            continue
-        label = extract_title(path.read_text(encoding="utf-8"), path.name)
-        pages.append((path.name, label))
+def parent_dir(rel_path):
+    """Parent directory of a posix rel path, "" for the root folder."""
+    return posixpath.dirname(rel_path)
 
-    # index.html first as "Home", everything else keeps alphabetical order.
-    pages.sort(key=lambda item: (item[0] != HOMEPAGE_FILE, item[0]))
-    return [(name, HOME_LABEL if name == HOMEPAGE_FILE else label)
-            for name, label in pages]
+
+def stem(rel_path):
+    """File stem, e.g. "engineering/codecs.html" -> "codecs"."""
+    return posixpath.splitext(posixpath.basename(rel_path))[0]
+
+
+def rel_href(cur_dir, target_rel_path):
+    """Relative href from a page in cur_dir to a sitemap target."""
+    if not cur_dir:
+        return target_rel_path
+    up = "../" * len(cur_dir.split("/"))
+    return up + target_rel_path
+
+
+class Sitemap:
+    """Builds and holds the hierarchical sitemap for the whole site."""
+
+    def __init__(self):
+        self.pages = {}       # rel_path -> PageNode
+        self.pages_in_dir = {}  # dir -> [rel_path, ...]
+        self.all_dirs = set()   # every directory that contains a page below it
+
+        self._scan_pages()
+        self._index_dirs()
+        self.root = self._build_tree("")
+
+    def _is_excluded(self, rel_path):
+        parts = rel_path.split("/")[:-1]
+        return any(part in EXCLUDE_FROM_SITEMAP for part in parts)
+
+    def _scan_pages(self):
+        for path in sorted(PUBLIC.rglob("*.html")):
+            rel = path.relative_to(PUBLIC).as_posix()
+            if self._is_excluded(rel):
+                continue
+            if path.name == NOT_FOUND_FILE:
+                continue
+            label = (HOME_LABEL if rel == HOMEPAGE_FILE
+                     else extract_title(path.read_text(encoding="utf-8"), path.name))
+            self.pages[rel] = PageNode(rel, label)
+
+    def _index_dirs(self):
+        for rel in self.pages:
+            d = parent_dir(rel)
+            self.pages_in_dir.setdefault(d, []).append(rel)
+            self.all_dirs.add(d)  # when rel's parent == "" we add "" directly
+            while d:
+                d = parent_dir(d)
+                self.all_dirs.add(d)
+
+    def _child_dirs_with_pages(self, cur_dir):
+        """Immediate sub-folders of cur_dir that contain pages somewhere below."""
+        found = set()
+        prefix = f"{cur_dir}/" if cur_dir else ""
+        for rel in self.pages:
+            if rel.startswith(prefix):
+                rest = rel[len(prefix):]
+                if "/" in rest:
+                    found.add(rest.split("/", 1)[0])
+        return found
+
+    def _build_tree(self, cur_dir):
+        children = []
+        my_pages = self.pages_in_dir.get(cur_dir, [])
+        my_pages = sorted(my_pages, key=lambda rel: (rel != HOMEPAGE_FILE, stem(rel)))
+        for rel in my_pages:
+            node = self.pages[rel]
+            section = stem(rel) if not cur_dir else posixpath.join(cur_dir, stem(rel))
+            if section in self.all_dirs:
+                node.children = self._build_tree(section)
+            children.append(node)
+
+        for sub in sorted(self._child_dirs_with_pages(cur_dir)):
+            section = sub if not cur_dir else posixpath.join(cur_dir, sub)
+            landing = f"{sub}.html" if not cur_dir else posixpath.join(cur_dir, sub + ".html")
+            if landing not in self.pages:
+                group = GroupNode(sub)
+                group.children = self._build_tree(section)
+                children.append(group)
+        return children
 
 
 def strip_block(text, start_token, end_token):
     """Remove a previously injected block (idempotency).
 
-    Matches the canonical markers this script writes:
-        <!-- BEGINSIDEBAR:CSS --> ... <!-- ENDSIDEBAR:CSS -->
+    The blocks this script writes own the single newline on each side, so
+    both are consumed here and re-added on injection. Without that, blank
+    lines would creep into the file on every run.
     """
     pattern = re.compile(
-        r"<!--\s*" + re.escape(start_token) + r"\s*-->.*?"
-        r"<!--\s*" + re.escape(end_token) + r"\s*-->",
+        r"\n?<!--\s*" + re.escape(start_token) + r"\s*-->.*?"
+        r"<!--\s*" + re.escape(end_token) + r"\s*-->\n?",
         re.DOTALL,
     )
     return pattern.sub("", text)
 
 
-def build_sidebar(current_filename, sitemap):
-    links = []
-    for filename, label in sitemap:
-        is_current = filename == current_filename
-        extra = ' class="current" aria-current="page"' if is_current else ""
-        links.append(
-            f"            <li><a href=\"{filename}\"{extra}>"
-            f"{escape_html(label)}</a></li>"
-        )
-    nav = "\n".join(links)
+def normalize_marker_spacing(html):
+    """Normalize blank lines next to the injected blocks.
+
+    Guarantees deterministic spacing at the block boundaries (the CSS marker
+    sits on its own line, one blank line separates the sidebar footer from
+    the page content) and cleans up blank-line runs left over from older
+    build_site versions. This is idempotent: on already-clean files it is a
+    no-op.
+    """
+    # CSS block: exactly one newline before the opening marker.
+    html = re.sub(r"\n*(<!--\s*BEGINSIDEBAR:CSS\s*-->)", r"\n\1", html)
+    # Sidebar block: exactly one blank line after the closing marker.
+    html = re.sub(
+        r"(<!--\s*ENDSIDEBAR\s*-->)(\n*)", r"\1\n\n", html
+    )
+    return html
+
+
+def render_nav(nodes, cur_dir, current_rel, depth=0):
+    """Render the nested <ul> sitemap. Handles page and group nodes."""
+    out = []
+    pad = "    " * (depth + 2)
+    for node in nodes:
+        if isinstance(node, PageNode):
+            href = rel_href(cur_dir, node.rel_path)
+            is_current = node.rel_path == current_rel
+            extra = ' class="current" aria-current="page"' if is_current else ""
+            out.append(
+                f"{pad}<li><a href=\"{href}\"{extra}>"
+                f"{escape_html(node.label)}</a></li>"
+            )
+            if node.children:
+                out.append(f"{pad}<ul>")
+                out.extend(render_nav(node.children, cur_dir, current_rel, depth + 1))
+                out.append(f"{pad}</ul>")
+        else:  # GroupNode
+            out.append(
+                f"{pad}<li class=\"group\"><span>"
+                f"{escape_html(node.label)}</span></li>"
+            )
+            if node.children:
+                out.append(f"{pad}<ul>")
+                out.extend(render_nav(node.children, cur_dir, current_rel, depth + 1))
+                out.append(f"{pad}</ul>")
+    return out
+
+
+def build_sidebar(sitemap, current_rel):
+    cur_dir = parent_dir(current_rel)
+    nav_lines = render_nav(sitemap.root, cur_dir, current_rel)
+    nav = "\n".join(nav_lines)
     return (
-        f"<!-- {SIDEBAR_MARKER_START} -->\n"
+        f"\n<!-- {SIDEBAR_MARKER_START} -->\n"
         f'<aside class="sidebar">\n'
         f"    <nav class=\"sidebar-nav\" aria-label=\"Sitemap\">\n"
         f"        <ul>\n"
@@ -178,7 +341,7 @@ def build_sidebar(current_filename, sitemap):
         f"        <p>{escape_html(COPYRIGHT)}</p>\n"
         f"    </div>\n"
         f"</aside>\n"
-        f"<!-- {SIDEBAR_MARKER_END} -->"
+        f"<!-- {SIDEBAR_MARKER_END} -->\n"
     )
 
 
@@ -186,49 +349,63 @@ def build_css_block():
     return (
         f"<!-- {CSS_MARKER_START} -->\n"
         f"<style id=\"sidebar-css\">{SIDEBAR_CSS}</style>\n"
-        f"<!-- {CSS_MARKER_END} -->"
+        f"<!-- {CSS_MARKER_END} -->\n"
     )
 
 
-def inject_into_page(html, current_filename, sitemap):
+def inject_into_page(html, current_rel, sitemap):
     html = strip_block(html, CSS_MARKER_START, CSS_MARKER_END)
     html = strip_block(html, SIDEBAR_MARKER_START, SIDEBAR_MARKER_END)
 
     css_block = build_css_block()
     if "</head>" in html:
-        html = html.replace("</head>", css_block + "\n</head>", 1)
+        html = html.replace("</head>", css_block + "</head>", 1)
     else:
-        html = css_block + "\n" + html
+        html = css_block + html
 
-    sidebar = build_sidebar(current_filename, sitemap)
+    sidebar = build_sidebar(sitemap, current_rel)
     match = re.search(r"<body[^>]*>", html, re.IGNORECASE)
     if match:
-        html = html[: match.end()] + "\n" + sidebar + html[match.end():]
+        html = html[: match.end()] + sidebar + html[match.end():]
     else:
-        html = sidebar + "\n" + html
+        html = sidebar + html
+    return normalize_marker_spacing(html)
 
-    return html
+
+def print_tree(nodes, indent=""):
+    for node in nodes:
+        if isinstance(node, PageNode):
+            print(f"{indent}{node.rel_path}  ({node.label})")
+            print_tree(node.children, indent + "  ")
+        else:
+            print(f"{indent}{node.label}/  (group)")
+            print_tree(node.children, indent + "  ")
 
 
 def main():
-    html_files = sorted(PUBLIC.glob("*.html"))
+    sitemap = Sitemap()
+
+    html_files = [p for p in sorted(PUBLIC.rglob("*.html"))
+                  if not any(part in EXCLUDE_FROM_INJECTION
+                             for part in p.relative_to(PUBLIC).parts[:-1])]
     if not html_files:
-        print(f"No HTML files found in {PUBLIC}", file=sys.stderr)
+        print(f"No HTML files found under {PUBLIC}", file=sys.stderr)
         return 1
 
-    sitemap = build_sitemap()
-    print("Build step: sitemap generated")
-    for filename, label in sitemap:
-        print(f"  - {filename}  ({label})")
+    print("Build step: sitemap:")
+    print_tree(sitemap.root)
 
     for path in html_files:
+        current_rel = path.relative_to(PUBLIC).as_posix()
         html = path.read_text(encoding="utf-8")
-        updated = inject_into_page(html, path.name, sitemap)
+        updated = inject_into_page(html, current_rel, sitemap)
         if updated != html:
             path.write_text(updated, encoding="utf-8")
-        print(f"  injected sidebar into {path.name}")
+            print(f"  updated {path.name} ({current_rel})")
+        else:
+            print(f"  unchanged {path.name} ({current_rel})")
 
-    print("Done building. You can now git add, git commit, and git push.")
+    print("Done. You can now git add, git commit, and git push.")
     return 0
 
 
