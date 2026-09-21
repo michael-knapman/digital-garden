@@ -5,8 +5,91 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cool stuff!</title>
+
+<!-- BEGINSIDEBAR:CSS -->
+<style id="sidebar-css">
+/* Injected by build_site.py - do not edit by hand, re-run the build instead. */
+:root {
+    --sidebar-width: 260px;
+}
+body {
+    margin-left: var(--sidebar-width);
+}
+aside.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: var(--sidebar-width);
+    box-sizing: border-box;
+    overflow-y: auto;
+    padding: 16px 14px;
+    background-color: #f3f0ea;
+    border-right: 1px solid #d8d2c6;
+    font-family: sans-serif;
+    font-size: 14px;
+    z-index: 1000;
+}
+.sidebar-nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.sidebar-nav li {
+    margin: 4px 0;
+}
+.sidebar-nav a {
+    display: block;
+    padding: 4px 8px;
+    color: #224a77;
+    text-decoration: none;
+    border-radius: 4px;
+}
+.sidebar-nav a:hover,
+.sidebar-nav a:focus {
+    background-color: #e3dccb;
+}
+.sidebar-nav a.current {
+    background-color: #d9d2c2;
+    font-weight: bold;
+    color: #17375c;
+}
+.sidebar-foot {
+    margin-top: 24px;
+    border-top: 1px solid #d8d2c6;
+    padding-top: 12px;
+    text-align: center;
+}
+.sidebar-foot p {
+    margin: 8px 0 0;
+    font-size: 12px;
+    color: #6b6559;
+}
+@media (max-width: 600px) {
+    :root {
+        --sidebar-width: min(220px, 70vw);
+    }
+}
+</style>
+<!-- ENDSIDEBAR:CSS -->
 </head>
 <body>
+<!-- BEGINSIDEBAR -->
+<aside class="sidebar">
+    <nav class="sidebar-nav" aria-label="Sitemap">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="codecs.html">Codecs</a></li>
+            <li><a href="cool_stuff.html" class="current" aria-current="page">Cool stuff!</a></li>
+        </ul>
+    </nav>
+    <div class="sidebar-foot">
+        <a href="https://nekoweb.org/"><img src="https://nekoweb.org/assets/buttons/button5.gif" alt="Nekoweb"></a>
+        <p>2026 Michael Knapman All Rights Reserved</p>
+    </div>
+</aside>
+<!-- ENDSIDEBAR -->
+
     Cool source code and websites:
     <ul>
         <li>https://github.com/fayeluna/Website</li>

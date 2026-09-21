@@ -14,8 +14,37 @@ Files not able to be pushed by deploy2nekoweb such as the custom cursor
 and linter are placed into the "hardcoded" folder.
 Files containing unorganized conent not yet on the website is in the "content" folder.
 
-TODO:
-Make a sidebar, topbar, and bottom bar for code reuse.
+## Build step
+
+Run this before `git push` to inject the fixed left-hand sidebar into every
+page in `public/`:
+
+    python3 build_site.py
+
+The sidebar shows a sitemap of all the site's pages (generated from their
+`<title>` tags, with `index.html` listed first as "Home"), a Nekoweb sticker
+and a copyright notice. The page you are currently on is highlighted.
+
+The build is idempotent and safe to re-run: old injected sidebars are
+replaced, never duplicated. If you add/rename/remove a page, just run the
+build again before pushing. The deployment workflow pushes `public/` as-is,
+so the sidebar must be in the files *before* you push.
+
+## Test step
+
+
+Test the website in VScode terminal by running:
+    python3 -m http.server 8000 --directory public
+
+## Push step
+
+Simply git push, and the deploy.yml mirrors the code onto the website!
+
+
+
+## TODO
+
+Make a topbar and bottom bar for code reuse and navigation.
 Add copyright and software license directly on bottom of website.
 Add a sitemap page.
 Manually write HTML for all my content. Consider one time use with a static site generator. Possible inspiration: https://www.contentstack.com/blog/all-about-headless/what-is-a-static-website-learn-why-its-perfect-for-speed-and-security and https://www.contentful.com/blog/what-is-a-static-website/
@@ -30,6 +59,10 @@ USB speeds and power delivery and how im sad USB 3.2 Gen 2x2 is a failed standar
 List of my most favourite most-robust ETFs such as IAUM or ZGLD.TO, explaining mechanisms referencing: https://rpc.cfainstitute.org/research/foundation/2015/a-comprehensive-guide-to-exchange-traded-funds-etfs https://rpc.cfainstitute.org/research/foundation/2025/guide-to-etfs https://rpc.cfainstitute.org/research/foundation/2026/evaluating-etfs-module-2
 Tax limitations of multi-cryptocurrency index funds like K1 tax forms.
 Talk about PHY sizes on silicon, explaining why USB 2.0 is still so common, and why chips have so few PCIE lanes. Reference https://www.techpowerup.com/347141/intel-core-ultra-series-3-panther-lake-h-die-annotated
+Tamagotchi tamatown shrine.
+
+
+## Legal
 
 Source code is licensed under the MIT License. Written content is licensed under CC BY-NC-SA 4.0.
 Copyright © 2026 Michael Knapman. All Rights Reserved.
