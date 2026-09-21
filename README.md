@@ -15,25 +15,21 @@ and linter are placed into the "hardcoded" folder.
 Files containing unorganized conent not yet on the website is in the "content" folder.
 
 TODO:
-Make website skeleton.
 Make a sidebar, topbar, and bottom bar for code reuse.
-Add a sitemap.
 Add copyright and software license directly on bottom of website.
+Add a sitemap page.
 Manually write HTML for all my content. Consider one time use with a static site generator. Possible inspiration: https://www.contentstack.com/blog/all-about-headless/what-is-a-static-website-learn-why-its-perfect-for-speed-and-security and https://www.contentful.com/blog/what-is-a-static-website/
 Add buttons to link to github and linkedin.
 Add a guestbook.
 Join https://1mb.club/ webring
 
-
-Cool source code and websites:
-https://github.com/fayeluna/Website
-https://github.com/amycatgirl/nekoweb-page
-
-Cool websites:
-https://deltarune.com/code/
-https://museum.lingscars.com/
-https://www.cameronsworld.net/
-
+IDEAS:
+Toothbrush recommendation page, referencing https://www.animated-teeth.com/electric_toothbrushes/oral-b-best-electric-toothbrushes.htm
+Wifi referencing https://www.wiisfi.com/
+USB speeds and power delivery and how im sad USB 3.2 Gen 2x2 is a failed standard that didn't catch on, so that USB 3.2 Gen 2x1 is the fastest common non-tunnelling USB speed at 10Gbps, making the Infineon FX20 useless.
+List of my most favourite most-robust ETFs such as IAUM or ZGLD.TO, explaining mechanisms referencing: https://rpc.cfainstitute.org/research/foundation/2015/a-comprehensive-guide-to-exchange-traded-funds-etfs https://rpc.cfainstitute.org/research/foundation/2025/guide-to-etfs https://rpc.cfainstitute.org/research/foundation/2026/evaluating-etfs-module-2
+Tax limitations of multi-cryptocurrency index funds like K1 tax forms.
+Talk about PHY sizes on silicon, explaining why USB 2.0 is still so common, and why chips have so few PCIE lanes. Reference https://www.techpowerup.com/347141/intel-core-ultra-series-3-panther-lake-h-die-annotated
 
 Source code is licensed under the MIT License. Written content is licensed under CC BY-NC-SA 4.0.
 Copyright © 2026 Michael Knapman. All Rights Reserved.
