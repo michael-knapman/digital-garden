@@ -44,7 +44,7 @@ STICKER = (
     '<img src="https://nekoweb.org/assets/buttons/button5.gif" alt="Nekoweb">'
     "</a>"
 )
-COPYRIGHT = "2026 Michael Knapman All Rights Reserved"
+COPYRIGHT = "Copyright © 2026 Michael Knapman. All Rights Reserved."
 
 SIDEBAR_CSS = """
 /* Injected by build_site.py - do not edit by hand, re-run the build instead. */
@@ -228,7 +228,7 @@ def main():
             path.write_text(updated, encoding="utf-8")
         print(f"  injected sidebar into {path.name}")
 
-    print("Done. You can now `git push`.")
+    print("Done building. You can now git add, git commit, and git push.")
     return 0
 
 
