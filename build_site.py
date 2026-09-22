@@ -32,6 +32,11 @@ What it does
   pages in subfolders get "../index.html" and so on.
   On phones (max-width 600px) the sidebar turns into a full-width top bar
   so the content gets the whole viewport.
+* Wraps the body text of every page in a <main class="content-box"> element
+  so the text sits on a cream panel centered in the viewport, with the
+  background pattern visible all around it (styled in public/style.css).
+  Like the sidebar, this is idempotent: re-running the build re-wraps the
+  current box instead of nesting another one.
 
 The script is idempotent: re-running it replaces any previously injected
 sidebar instead of duplicating it, so it is safe to run after every edit.
@@ -328,6 +333,42 @@ def normalize_marker_spacing(html):
     return html
 
 
+CONTENT_BOX_OPEN = '<main class="content-box">'
+CONTENT_BOX_CLOSE = "</main>"
+
+
+def wrap_content(html):
+    """Wrap the page's body text in the central cream text box.
+
+    Everything between the sidebar's closing marker and </body> becomes the
+    inside of a <main class="content-box"> element. style.css centers the
+    box and gives it its cream background, leaving the pattern visible on
+    all four sides.
+
+    Idempotent: a page that already carries the wrapper is left alone, so
+    re-running the build never nests a second box.
+    """
+    body_close = html.rfind("</body>")
+    if body_close == -1:
+        return html
+
+    marker = f"<!-- {SIDEBAR_MARKER_END} -->"
+    marker_end = html.rfind(marker)
+    if marker_end == -1 or marker_end > body_close:
+        return html
+
+    content = html[marker_end + len(marker):body_close]
+    if CONTENT_BOX_OPEN in content:
+        return html  # already wrapped
+
+    wrapper = (
+        f"\n{CONTENT_BOX_OPEN}\n"
+        + content.strip("\n")
+        + f"\n{CONTENT_BOX_CLOSE}\n"
+    )
+    return html[:marker_end + len(marker)] + wrapper + html[body_close:]
+
+
 def render_nav(nodes, cur_dir, current_rel, depth=0):
     """Render the nested <ul> sitemap. Handles page and group nodes."""
     out = []
@@ -408,6 +449,10 @@ def inject_into_page(html, current_rel, sitemap):
         html = html[: match.end()] + sidebar + html[match.end():]
     else:
         html = sidebar + html
+
+    # Wrap the body text in the central cream text box (see style.css).
+    html = wrap_content(html)
+
     return normalize_marker_spacing(html)
 
 
