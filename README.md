@@ -34,8 +34,7 @@ Simply git push, and the deploy.yml mirrors the code onto the website!
 Manually write HTML for all my content. Consider one time use with a static site generator. Possible inspiration: https://www.contentstack.com/blog/all-about-headless/what-is-a-static-website-learn-why-its-perfect-for-speed-and-security and https://www.contentful.com/blog/what-is-a-static-website/
 Add buttons in sidebar to link to github and linkedin.  
 Add a guestbook.  
-Change the main theme of my whole website to Tamatown/Tamagotchi since it seems 
-Add a player (not autoplayed!) for Tamatown main theme on sidebar, its okay that the music stops each time that you go to a different page.  
+Change the main theme of my whole website to Tamatown/Tamagotchi since it seems  
 Use several repeating background of tamagotchi images to save storage.  
 Develop index mainpage into a skeuomorphic(?) nagivation page, where a large image of Tamatown is provided as a map, with label-hyperlinks overlayed, similar to the neopets map. Each label leads to a top-level area of the site.
 Include art assets from Tamagotchi Connection V3/4.5/5 and Tamagotchi corner shop 3, and concept art and promotional art.

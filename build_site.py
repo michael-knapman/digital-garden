@@ -26,10 +26,11 @@ What it does
                 site; they still get the sidebar, just no link to them.
   The 404 page (not_found.html) is also left out of the sitemap.
 * Injects a fixed left-hand sidebar into every page (except inside assets/).
-  The sidebar shows the sitemap, a sticker linking to nekoweb.org and a
-  copyright notice. The page or section you are currently on is
-  highlighted. Links are written relative to each page's own folder, so
-  pages in subfolders get "../index.html" and so on.
+  The sidebar shows a compact music player (the Tamatown funky loop, native
+  audio controls, never autoplays) above the sitemap, plus the sitemap, a
+  sticker linking to nekoweb.org and a copyright notice. The page or section
+  you are currently on is highlighted. Links are written relative to each
+  page's own folder, so pages in subfolders get "../index.html" and so on.
   On phones (max-width 600px) the sidebar turns into a full-width top bar
   so the content gets the whole viewport.
 * Wraps the body text of every page in a <main class="content-box"> element
@@ -74,6 +75,17 @@ STICKER = (
     "</a>"
 )
 COPYRIGHT = "Copyright © 2026 Michael Knapman. All Rights Reserved."
+
+# Compact music player shown at the top of the sidebar. It uses the browser's
+# native audio controls (play/pause + slider), so no JS is needed. It never
+# autoplays; it loops once the visitor presses play. The src is written
+# relative to each page's own folder, like every other asset reference.
+MUSIC_FILE = "assets/TamaTown_Funky_V3_loop.mp3"
+AUDIO_PLAYER = (
+    '    <div class="sidebar-audio">\n'
+    '        <audio controls loop preload="metadata" src="{src}"></audio>\n'
+    "    </div>\n"
+)
 
 SIDEBAR_CSS = """
 /* Injected by build_site.py - do not edit by hand, re-run the build instead. */
@@ -143,6 +155,19 @@ aside.sidebar {
     margin: 8px 0 0;
     font-size: 12px;
     color: #6b6559;
+}
+/* Compact music player pinned to the top of the sidebar, above the sitemap.
+   Native audio controls: play/pause + a small slider, no JS required. */
+.sidebar-audio {
+    margin-bottom: 14px;
+    padding: 6px;
+    background-color: #fdf6e3;
+    border: 1px solid #d8d2c6;
+    border-radius: 6px;
+}
+.sidebar-audio audio {
+    display: block;
+    width: 100%;
 }
 /* Mobile: the sidebar becomes a full-width top bar so the content gets
    the whole viewport. It sits in normal flow (scrolls away as you read)
@@ -405,7 +430,8 @@ def build_sidebar(sitemap, current_rel):
     return (
         f"\n<!-- {SIDEBAR_MARKER_START} -->\n"
         f'<aside class="sidebar">\n'
-        f"    <nav class=\"sidebar-nav\" aria-label=\"Sitemap\">\n"
+        + AUDIO_PLAYER.format(src=rel_href(cur_dir, MUSIC_FILE))
+        + f"    <nav class=\"sidebar-nav\" aria-label=\"Sitemap\">\n"
         f"        <ul>\n"
         f"{nav}\n"
         f"        </ul>\n"

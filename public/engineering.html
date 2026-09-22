@@ -76,6 +76,19 @@ aside.sidebar {
     font-size: 12px;
     color: #6b6559;
 }
+/* Compact music player pinned to the top of the sidebar, above the sitemap.
+   Native audio controls: play/pause + a small slider, no JS required. */
+.sidebar-audio {
+    margin-bottom: 14px;
+    padding: 6px;
+    background-color: #fdf6e3;
+    border: 1px solid #d8d2c6;
+    border-radius: 6px;
+}
+.sidebar-audio audio {
+    display: block;
+    width: 100%;
+}
 /* Mobile: the sidebar becomes a full-width top bar so the content gets
    the whole viewport. It sits in normal flow (scrolls away as you read)
    and scrolls internally if the sitemap outgrows the capped height. */
@@ -118,6 +131,9 @@ aside.sidebar {
 <body>
 <!-- BEGINSIDEBAR -->
 <aside class="sidebar">
+    <div class="sidebar-audio">
+        <audio controls loop preload="metadata" src="assets/TamaTown_Funky_V3_loop.mp3"></audio>
+    </div>
     <nav class="sidebar-nav" aria-label="Sitemap">
         <ul>
         <li><a href="index.html">Home</a></li>

@@ -5,6 +5,19 @@ body {
 }
 
 /*
+    Custom cursor: Tamagotchi Connection V3 ice cream sprite.
+    Applied to every element (*) so it stays as the cursor when hovering
+    links, buttons, etc. instead of reverting to the OS default pointer.
+    The url() resolves relative to this stylesheet, so "assets/..." always
+    points at public/assets/ no matter which page loaded style.css.
+    Hotspot (0 0) = top-left corner; "auto" is the fallback if the image
+    ever fails to load.
+*/
+* {
+    cursor: url(assets/cursor_tamagotchi_connection_3_ice_cream.png) 0 0, auto;
+}
+
+/*
     Central cream text box, injected around every page's body by build_site.py
     (see the wrap_content function there). Do not move the <main> tag out of
     the page body; this stylesheet is what gives it its look.
