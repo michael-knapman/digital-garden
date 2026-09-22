@@ -83,6 +83,7 @@ COPYRIGHT = "Copyright © 2026 Michael Knapman. All Rights Reserved."
 MUSIC_FILE = "assets/TamaTown_Funky_V3_loop.mp3"
 AUDIO_PLAYER = (
     '    <div class="sidebar-audio">\n'
+    '        <p class="sidebar-audio-label">Now playing: Tamatown Theme</p>\n'
     '        <audio controls loop preload="metadata" src="{src}"></audio>\n'
     "    </div>\n"
 )
@@ -160,10 +161,17 @@ aside.sidebar {
    Native audio controls: play/pause + a small slider, no JS required. */
 .sidebar-audio {
     margin-bottom: 14px;
-    padding: 6px;
+    padding: 5px 6px 6px;
     background-color: #fdf6e3;
     border: 1px solid #d8d2c6;
     border-radius: 6px;
+}
+.sidebar-audio-label {
+    margin: 0 0 4px;
+    font-size: 10px;
+    font-weight: bold;
+    letter-spacing: 0.3px;
+    color: #6b6559;
 }
 .sidebar-audio audio {
     display: block;
