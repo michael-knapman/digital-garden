@@ -21,11 +21,11 @@ What it does
         Codecs (engineering/codecs.html)
 
 * Excludes special folders from the sitemap:
-  - media/    - assets only (images, music), never webpages
+  - assets/  - assets only (images, music), never webpages
   - unlisted/ - secret pages you reach by typing the URL or exploring the
                 site; they still get the sidebar, just no link to them.
   The 404 page (not_found.html) is also left out of the sitemap.
-* Injects a fixed left-hand sidebar into every page (except inside media/).
+* Injects a fixed left-hand sidebar into every page (except inside assets/).
   The sidebar shows the sitemap, a sticker linking to nekoweb.org and a
   copyright notice. The page or section you are currently on is
   highlighted. Links are written relative to each page's own folder, so
@@ -54,9 +54,9 @@ HOMEPAGE_FILE = "index.html"
 NOT_FOUND_FILE = "not_found.html"
 
 # Folders that are never listed in the sidebar sitemap.
-EXCLUDE_FROM_SITEMAP = {"media", "unlisted"}
+EXCLUDE_FROM_SITEMAP = {"assets", "unlisted"}
 # Folders whose pages do not even get a sidebar injected (pure assets).
-EXCLUDE_FROM_INJECTION = {"media"}
+EXCLUDE_FROM_INJECTION = {"assets"}
 
 CSS_MARKER_START = "BEGINSIDEBAR:CSS"
 CSS_MARKER_END = "ENDSIDEBAR:CSS"
@@ -378,9 +378,15 @@ def build_sidebar(sitemap, current_rel):
     )
 
 
-def build_css_block():
+def build_css_block(cur_dir):
+    """The injected head block: site stylesheet link + sidebar CSS.
+
+    The stylesheet link is written relative to the page's own folder so
+    pages in subfolders (e.g. engineering/codecs.html) resolve it too.
+    """
     return (
         f"<!-- {CSS_MARKER_START} -->\n"
+        f'<link rel="stylesheet" href="{rel_href(cur_dir, "style.css")}">\n'
         f"<style id=\"sidebar-css\">{SIDEBAR_CSS}</style>\n"
         f"<!-- {CSS_MARKER_END} -->\n"
     )
@@ -390,7 +396,7 @@ def inject_into_page(html, current_rel, sitemap):
     html = strip_block(html, CSS_MARKER_START, CSS_MARKER_END)
     html = strip_block(html, SIDEBAR_MARKER_START, SIDEBAR_MARKER_END)
 
-    css_block = build_css_block()
+    css_block = build_css_block(parent_dir(current_rel))
     if "</head>" in html:
         html = html.replace("</head>", css_block + "</head>", 1)
     else:
