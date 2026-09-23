@@ -36,8 +36,12 @@ What it does
   The sidebar shows a compact music player (the Tamatown funky loop, native
   audio controls, never autoplays) above the sitemap, plus the sitemap, a
   sticker linking to nekoweb.org and a copyright notice. The page or section
-  you are currently on is highlighted. Links are written relative to each
-  page's own folder, so pages in subfolders get "../index.html" and so on.
+  you are currently on is highlighted. Branches only expand when relevant:
+  the home page shows just the top-level pages, and a section's second- and
+  third-level pages appear once you are on that section or on a page inside
+  it, so the sidebar stays compact as the site grows. Links are written
+  relative to each page's own folder, so pages in subfolders get
+  "../index.html" and so on.
   On phones (max-width 600px) the sidebar turns into a full-width top bar
   so the content gets the whole viewport.
 * Wraps the body text of every page in a <main class="content-box"> element
@@ -417,8 +421,32 @@ def wrap_content(html):
     return html[:marker_end + len(marker)] + wrapper + html[body_close:]
 
 
+def is_node_active(node, current_rel):
+    """True when the current page is this node or one of its descendants.
+
+    This is what decides whether a branch is expanded in the sidebar: a
+    section's sub-pages appear when you are on the section itself (its
+    landing page) or on any page inside it, and stay hidden otherwise so
+    the sidebar does not balloon on large sites.
+    """
+    if isinstance(node, PageNode):
+        if current_rel == node.rel_path:
+            return True
+        section = posixpath.splitext(node.rel_path)[0]  # "engineering.html" -> "engineering"
+    else:  # GroupNode: the branch is the folder with this label
+        section = node.label
+    return current_rel.startswith(section + "/")
+
+
 def render_nav(nodes, cur_dir, current_rel, depth=0):
-    """Render the nested <ul> sitemap. Handles page and group nodes."""
+    """Render the nested <ul> sitemap. Handles page and group nodes.
+
+    A branch is only expanded when is_node_active is true, i.e. the visitor
+    is on that branch: the home page shows just the top level, and second/
+    third-level pages appear once you are on the relevant section (or on a
+    page inside it). Sub-pages are never a dead end, because every folder
+    has a landing page that links to them.
+    """
     out = []
     pad = "    " * (depth + 2)
     for node in nodes:
@@ -430,7 +458,7 @@ def render_nav(nodes, cur_dir, current_rel, depth=0):
                 f"{pad}<li><a href=\"{href}\"{extra}>"
                 f"{escape_html(node.label)}</a></li>"
             )
-            if node.children:
+            if node.children and is_node_active(node, current_rel):
                 out.append(f"{pad}<ul>")
                 out.extend(render_nav(node.children, cur_dir, current_rel, depth + 1))
                 out.append(f"{pad}</ul>")
@@ -439,7 +467,7 @@ def render_nav(nodes, cur_dir, current_rel, depth=0):
                 f"{pad}<li class=\"group\"><span>"
                 f"{escape_html(node.label)}</span></li>"
             )
-            if node.children:
+            if node.children and is_node_active(node, current_rel):
                 out.append(f"{pad}<ul>")
                 out.extend(render_nav(node.children, cur_dir, current_rel, depth + 1))
                 out.append(f"{pad}</ul>")
