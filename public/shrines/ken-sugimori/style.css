@@ -1,0 +1,196 @@
+/*
+    Shrine stylesheet: Ken Sugimori — early Pokémon art.
+
+    A self-contained subtheme for this one page. build_site.py still injects
+    the site sidebar and stylesheet; this file only describes the shrine's
+    own look. Re-skin the whole shrine by editing the palette in :root.
+
+    Palette: a warm paper ground with soft hand-painted watercolor washes,
+    echoing the watercolor art of the 1996 original games.
+*/
+
+:root {
+    --paper: #faf4e7;
+    --ink: #33403c;
+    --ink-soft: #5c6b64;
+    --water-a: #9ec3d4;   /* soft sky blue  */
+    --water-b: #aacfa4;   /* leaf green     */
+    --water-c: #e8b5a0;   /* clay / sakura  */
+    --line: rgba(51, 64, 60, 0.16);
+}
+
+.shrine {
+    box-sizing: border-box;
+    min-height: 100vh;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 44px clamp(20px, 4vw, 56px) 72px;
+    color: var(--ink);
+    font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+    line-height: 1.6;
+    background:
+        radial-gradient(1100px 480px at 88% -12%, rgba(158, 195, 212, 0.42), transparent 60%),
+        radial-gradient(820px 460px at -12% 32%, rgba(170, 207, 164, 0.34), transparent 55%),
+        radial-gradient(640px 380px at 112% 58%, rgba(232, 181, 160, 0.28), transparent 62%),
+        var(--paper);
+}
+
+.shrine a {
+    color: var(--ink);
+    text-decoration: underline;
+    text-decoration-color: var(--water-a);
+    text-underline-offset: 3px;
+}
+
+.shrine a:hover,
+.shrine a:focus {
+    text-decoration-color: var(--water-c);
+}
+
+/* --- breadcrumb -------------------------------------------------------- */
+.shrine-crumb {
+    margin: 0 0 20px;
+    font-size: 0.85rem;
+}
+
+.shrine-crumb a {
+    text-decoration: none;
+    color: var(--ink-soft);
+}
+
+.shrine-crumb a:hover {
+    text-decoration: underline;
+    color: var(--ink);
+}
+
+/* --- hero -------------------------------------------------------------- */
+.shrine-eyebrow {
+    margin: 0;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+}
+
+.shrine-hero h1 {
+    margin: 0.12em 0 0.14em;
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: 400;
+    font-size: clamp(2.4rem, 6vw, 4rem);
+    letter-spacing: -0.01em;
+}
+
+.shrine-tagline {
+    margin: 0;
+    max-width: 36em;
+    font-size: 1.05rem;
+    color: var(--ink-soft);
+}
+
+/* --- generic sections -------------------------------------------------- */
+.shrine section {
+    margin-top: clamp(36px, 6vw, 56px);
+}
+
+.shrine h2 {
+    margin: 0 0 0.5em;
+    font-family: Georgia, serif;
+    font-weight: 400;
+    font-size: 1.7rem;
+}
+
+.shrine h2::after {
+    content: "";
+    display: block;
+    width: 74px;
+    height: 5px;
+    margin-top: 0.4em;
+    border-radius: 4px;
+    background: linear-gradient(90deg, var(--water-a), var(--water-c));
+}
+
+.shrine section p {
+    max-width: 46em;
+}
+
+/* --- gallery ----------------------------------------------------------- */
+.art-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    gap: clamp(14px, 2.5vw, 24px);
+}
+
+.art-card {
+    margin: 0;
+    padding: 10px 10px 12px;
+    background: rgba(255, 255, 255, 0.55);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(51, 64, 60, 0.08);
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.art-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 22px rgba(51, 64, 60, 0.18);
+}
+
+.art-card img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.art-card figcaption {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 8px;
+    margin-top: 10px;
+    font-size: 0.85rem;
+}
+
+.art-name {
+    font-weight: bold;
+}
+
+.art-meta {
+    color: var(--ink-soft);
+    font-size: 0.78rem;
+}
+
+/* --- about ------------------------------------------------------------- */
+.shrine-about dl {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.35em 1.2em;
+    max-width: 42em;
+    margin: 0;
+}
+
+.shrine-about dt {
+    font-weight: bold;
+}
+
+.shrine-about dd {
+    margin: 0;
+    color: var(--ink-soft);
+}
+
+/* --- footer ------------------------------------------------------------ */
+.shrine-foot {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    margin-top: 56px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+    font-size: 0.85rem;
+}
+
+.shrine-foot p {
+    flex-basis: 100%;
+    margin: 6px 0 0;
+    color: var(--ink-soft);
+}

@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ken Sugimori</title>
+    <!-- Shrine stylesheet: edit public/shrines/ken-sugimori/style.css to
+         re-skin this whole page (the palette lives in its :root block).
+         The site's sidebar and stylesheet are still injected by
+         build_site.py when you run it. -->
+    <link rel="stylesheet" href="ken-sugimori/style.css">
+<!-- BEGINSIDEBAR:CSS -->
+<link rel="stylesheet" href="../style.css">
+<style id="sidebar-css">
+/* Injected by build_site.py - do not edit by hand, re-run the build instead. */
+:root {
+    --sidebar-width: 260px;
+}
+body {
+    margin-left: var(--sidebar-width);
+}
+aside.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: var(--sidebar-width);
+    box-sizing: border-box;
+    overflow-y: auto;
+    padding: 16px 14px;
+    background-color: #f3f0ea;
+    border-right: 1px solid #d8d2c6;
+    font-family: sans-serif;
+    font-size: 14px;
+    z-index: 1000;
+}
+.sidebar-nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.sidebar-nav ul ul {
+    padding-left: 14px;
+}
+.sidebar-nav li {
+    margin: 4px 0;
+}
+.sidebar-nav li.group > span {
+    display: block;
+    padding: 4px 8px;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: #8a8375;
+}
+.sidebar-nav a {
+    display: block;
+    padding: 4px 8px;
+    color: #224a77;
+    text-decoration: none;
+    border-radius: 4px;
+}
+.sidebar-nav a:hover,
+.sidebar-nav a:focus {
+    background-color: #e3dccb;
+}
+.sidebar-nav a.current {
+    background-color: #d9d2c2;
+    font-weight: bold;
+    color: #17375c;
+}
+.sidebar-foot {
+    margin-top: 24px;
+    border-top: 1px solid #d8d2c6;
+    padding-top: 12px;
+    text-align: center;
+}
+.sidebar-foot p {
+    margin: 8px 0 0;
+    font-size: 12px;
+    color: #6b6559;
+}
+/* Compact music player pinned to the top of the sidebar, above the sitemap.
+   Native audio controls: play/pause + a small slider, no JS required. */
+.sidebar-audio {
+    margin-bottom: 14px;
+    padding: 5px 6px 6px;
+    background-color: #fdf6e3;
+    border: 1px solid #d8d2c6;
+    border-radius: 6px;
+}
+.sidebar-audio-label {
+    margin: 0 0 4px;
+    font-size: 10px;
+    font-weight: bold;
+    letter-spacing: 0.3px;
+    color: #6b6559;
+}
+.sidebar-audio audio {
+    display: block;
+    width: 100%;
+}
+/* Mobile: the sidebar becomes a full-width top bar so the content gets
+   the whole viewport. It sits in normal flow (scrolls away as you read)
+   and scrolls internally if the sitemap outgrows the capped height. */
+@media (max-width: 600px) {
+    body {
+        margin-left: 0;
+    }
+    aside.sidebar {
+        position: static;
+        width: 100%;
+        height: auto;
+        max-height: 32vh;
+        overflow-y: auto;
+        box-sizing: border-box;
+        padding: 8px 10px 10px;
+        border-right: none;
+        border-bottom: 1px solid #d8d2c6;
+    }
+    .sidebar-nav ul {
+        padding-left: 0;
+    }
+    .sidebar-nav ul ul {
+        padding-left: 12px;
+    }
+    .sidebar-nav li {
+        margin: 2px 0;
+    }
+    .sidebar-nav a {
+        padding: 3px 6px;
+        font-size: 13px;
+    }
+    .sidebar-foot {
+        margin-top: 8px;
+        padding-top: 8px;
+    }
+}
+</style>
+<!-- ENDSIDEBAR:CSS -->
+</head>
+<body>
+<!-- BEGINSIDEBAR -->
+<aside class="sidebar">
+    <div class="sidebar-audio">
+        <p class="sidebar-audio-label">Now playing: Tamatown Theme</p>
+        <audio controls loop preload="metadata" src="../assets/TamaTown_Funky_V3_loop.mp3"></audio>
+    </div>
+    <nav class="sidebar-nav" aria-label="Sitemap">
+        <ul>
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../cool_stuff.html">Cool stuff!</a></li>
+        <li><a href="../credits.html">Credits</a></li>
+        <li><a href="../engineering.html">Engineering landing page</a></li>
+        <li><a href="../housekeeping.html">Housekeeping</a></li>
+        <li><a href="../selected-works.html">Selected Works</a></li>
+        <li><a href="../short-story.html">Short Story</a></li>
+        <li><a href="../shrines.html">Shrines</a></li>
+        <ul>
+            <li><a href="../shrines/ken-sugimori.html" class="current" aria-current="page">Ken Sugimori</a></li>
+        </ul>
+        <li><a href="../siivagunner.html">Siivagunner</a></li>
+        </ul>
+    </nav>
+    <div class="sidebar-foot">
+        <a href="https://nekoweb.org/"><img src="https://nekoweb.org/assets/buttons/button1.gif" alt="Nekoweb"></a>
+        <p>Copyright © 2026 Michael Knapman. All Rights Reserved.</p>
+    </div>
+</aside>
+<!-- ENDSIDEBAR -->
+
+<!-- nocontentbox -->
+<div class="shrine">
+    <nav class="shrine-crumb" aria-label="Breadcrumb">
+        <a href="shrines.html">← Back to Shrines</a>
+    </nav>
+
+    <header class="shrine-hero">
+        <p class="shrine-eyebrow">Shrine · Pokémon · 1996</p>
+        <h1>Ken Sugimori</h1>
+        <p class="shrine-tagline">
+            Early Pokémon artwork — the hand-painted watercolor era of the
+            original 151.
+        </p>
+    </header>
+
+    <section class="shrine-intro">
+        <!-- TODO: rewrite this intro in your own words, then delete this
+             comment. The site's house rule is that you do the writing and
+             AI only does HTML and CSS. -->
+        <p>
+            Ken Sugimori is the character designer and art director of the
+            Pokémon series at GAME FREAK. For the 1996 original games he
+            hand-painted the first 151 Pokémon in soft watercolors — a gentle,
+            painterly look that defined the series before the anime and the
+            sprites did.
+        </p>
+        <p>
+            This shrine is a gallery of that early work. Every card below is a
+            placeholder: drop in scans or photographs you have permission to
+            share (the files go in <code>shrines/ken-sugimori/art/</code>),
+            then credit the source in the footer.
+        </p>
+    </section>
+
+    <section class="shrine-gallery" aria-labelledby="gallery-heading">
+        <h2 id="gallery-heading">The Original 151</h2>
+        <div class="art-grid">
+            <figure class="art-card">
+                <img src="ken-sugimori/art/bulbasaur.svg"
+                     alt="Ken Sugimori artwork of Bulbasaur (placeholder)">
+                <figcaption>
+                    <span class="art-name">Bulbasaur</span>
+                    <span class="art-meta">Seed Pokémon · 1996</span>
+                </figcaption>
+            </figure>
+            <figure class="art-card">
+                <img src="ken-sugimori/art/charmander.svg"
+                     alt="Ken Sugimori artwork of Charmander (placeholder)">
+                <figcaption>
+                    <span class="art-name">Charmander</span>
+                    <span class="art-meta">Lizard Pokémon · 1996</span>
+                </figcaption>
+            </figure>
+            <figure class="art-card">
+                <img src="ken-sugimori/art/squirtle.svg"
+                     alt="Ken Sugimori artwork of Squirtle (placeholder)">
+                <figcaption>
+                    <span class="art-name">Squirtle</span>
+                    <span class="art-meta">Tiny Turtle Pokémon · 1996</span>
+                </figcaption>
+            </figure>
+            <figure class="art-card">
+                <img src="ken-sugimori/art/pikachu.svg"
+                     alt="Ken Sugimori artwork of Pikachu (placeholder)">
+                <figcaption>
+                    <span class="art-name">Pikachu</span>
+                    <span class="art-meta">Mouse Pokémon · 1996</span>
+                </figcaption>
+            </figure>
+            <figure class="art-card">
+                <img src="ken-sugimori/art/eevee.svg"
+                     alt="Ken Sugimori artwork of Eevee (placeholder)">
+                <figcaption>
+                    <span class="art-name">Eevee</span>
+                    <span class="art-meta">Evolution Pokémon · 1996</span>
+                </figcaption>
+            </figure>
+            <figure class="art-card">
+                <img src="ken-sugimori/art/mewtwo.svg"
+                     alt="Ken Sugimori artwork of Mewtwo (placeholder)">
+                <figcaption>
+                    <span class="art-name">Mewtwo</span>
+                    <span class="art-meta">Genetic Pokémon · 1996</span>
+                </figcaption>
+            </figure>
+            <!-- To add more cards: copy a <figure class="art-card"> block,
+                 point the src at shrines/ken-sugimori/art/<your-file>,
+                 and write your own alt text + caption. The grid lays out
+                 as many cards as you give it. -->
+        </div>
+    </section>
+
+    <section class="shrine-note">
+        <!-- TODO: replace this whole section with words about why the early
+             watercolor look matters to you. -->
+        <h2>A note on the look</h2>
+        <p>
+            The sprites in the Game Boy games could only show a hint of the
+            art behind them — a few colors, tiny pixels. It is the paintings,
+            not the sprites, that capture how warm and hand-drawn the world
+            felt in 1996. That is what this shrine is for.
+        </p>
+    </section>
+
+    <section class="shrine-about">
+        <h2>About the artist</h2>
+        <p>
+            Ken Sugimori (born 1966) is an illustrator and a founding member
+            of GAME FREAK. As the series' character designer and art director
+            he drew the original 151 — the watercolor designs that gave the
+            early Pokémon games their identity — and his style defined how the
+            garden-variety monsters first looked in people's minds.
+        </p>
+        <dl>
+            <dt>Born</dt><dd>1966, Takarazuka, Hyōgo, Japan</dd>
+            <dt>Role</dt><dd>Character designer &amp; art director, GAME FREAK</dd>
+            <dt>This era</dt><dd>Pokémon Red &amp; Green, 1996 — the original 151</dd>
+            <dt>Why it matters</dt><dd>The soft watercolor palette set the whole series' visual identity</dd>
+        </dl>
+    </section>
+
+    <footer class="shrine-foot">
+        <a href="shrines.html">All shrines</a>
+        <a href="credits.html">Site credits</a>
+        <p>
+            Pokémon © Nintendo · Creatures Inc. · GAME FREAK inc.
+            Non-commercial fan shrine. All artwork shown belongs to its
+            respective owners; this page uses placeholder images until the
+            owner adds originals.
+        </p>
+    </footer>
+</div>
+</body>
+</html>

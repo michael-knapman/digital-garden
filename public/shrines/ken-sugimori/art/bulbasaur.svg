@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="640" viewBox="0 0 480 640" role="img" aria-label="Placeholder for Sugimori artwork">
+  <rect width="480" height="640" fill="#eef5e6"/>
+  <circle cx="130" cy="170" r="95" fill="#aacfa4" opacity="0.5"/>
+  <circle cx="350" cy="430" r="125" fill="#5f8f6a" opacity="0.35"/>
+  <circle cx="250" cy="300" r="42" fill="#aacfa4" opacity="0.25"/>
+  <text x="240" y="566" text-anchor="middle" font-family="Georgia, serif" font-size="30" fill="#4a5a44">Sugimori artwork</text>
+  <text x="240" y="598" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" fill="#5f8f6a">placeholder - replace me</text>
+</svg>

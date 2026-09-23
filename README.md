@@ -37,6 +37,12 @@ paragraphs (trailing double spaces become line breaks), `*` bullet items,
 pipe tables, and `<https://...>` autolinks. Everything else is HTML-escaped
 and passed through verbatim.
 
+Hand-crafted pages: pages you write directly in `public/` (like
+`credits.html`, or a pretty art shrine) get the sidebar and stylesheet but
+are never overwritten. Add `<!-- nocontentbox -->` anywhere in such a page to
+opt out of the cream content-box wrapper so it can control its own layout;
+the build unwraps/re-wraps automatically as you add or remove that marker.
+
 ## Test step
 
 Test the website in VScode terminal by running:

@@ -47,8 +47,12 @@ What it does
 * Wraps the body text of every page in a <main class="content-box"> element
   so the text sits on a cream panel centered in the viewport, with the
   background pattern visible all around it (styled in public/style.css).
-  Like the sidebar, this is idempotent: re-running the build re-wraps the
-  current box instead of nesting another one.
+  A page containing <!-- nocontentbox --> opts out of that wrapper so
+  hand-crafted pages can control their own layout; the marker is honored in
+  both directions (adding it unwraps, removing it re-wraps), and removing
+  the marker converges back to the normal box. Like the sidebar, this is
+  idempotent: re-running the build re-wraps the current box instead of
+  nesting another one.
 
 The script is idempotent: re-running it replaces any previously injected
 sidebar instead of duplicating it, so it is safe to run after every edit.
@@ -388,6 +392,28 @@ def normalize_marker_spacing(html):
 CONTENT_BOX_OPEN = '<main class="content-box">'
 CONTENT_BOX_CLOSE = "</main>"
 
+# A page containing <!-- nocontentbox --> opts out of the central cream text
+# box so it can control its own layout (e.g. a hand-crafted art shrine). The
+# sidebar and stylesheet are still injected; only the wrapper is skipped.
+NO_CONTENTBOX_MARKER = "nocontentbox"
+
+
+def strip_content_box(content):
+    """Remove a <main class="content-box">...</main> wrapper, if present.
+
+    The wrapper can sit anywhere in the content region (a page may carry the
+    opt-out marker or other comments before it). Returns the inner text with
+    wrapper edges dropped; returns `content` unchanged when no wrapper found.
+    """
+    open_pos = content.find(CONTENT_BOX_OPEN)
+    close_pos = content.rfind(CONTENT_BOX_CLOSE)
+    if open_pos == -1 or close_pos == -1 or close_pos < open_pos:
+        return content
+    inner = content[open_pos + len(CONTENT_BOX_OPEN):close_pos].strip("\n")
+    prefix = content[:open_pos].rstrip("\n")
+    suffix = content[close_pos + len(CONTENT_BOX_CLOSE):].lstrip("\n")
+    return (prefix + "\n" + inner + "\n" + suffix).strip("\n")
+
 
 def wrap_content(html):
     """Wrap the page's body text in the central cream text box.
@@ -398,7 +424,10 @@ def wrap_content(html):
     all four sides.
 
     Idempotent: a page that already carries the wrapper is left alone, so
-    re-running the build never nests a second box.
+    re-running the build never nests a second box. Pages that ask to opt out
+    with <!-- nocontentbox --> are *unwrapped* instead, so toggling the
+    marker in either direction always converges on the page being in the
+    right state.
     """
     body_close = html.rfind("</body>")
     if body_close == -1:
@@ -410,6 +439,14 @@ def wrap_content(html):
         return html
 
     content = html[marker_end + len(marker):body_close]
+
+    if f"<!-- {NO_CONTENTBOX_MARKER} -->" in html:
+        unwrapped = strip_content_box(content)
+        if unwrapped is not content:
+            return (html[:marker_end + len(marker)] + "\n"
+                    + unwrapped + "\n" + html[body_close:])
+        return html  # already unwrapped
+
     if CONTENT_BOX_OPEN in content:
         return html  # already wrapped
 
