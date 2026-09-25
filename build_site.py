@@ -703,11 +703,17 @@ def inject_into_page(html, current_rel, sitemap):
         html = css_block + html
 
     sidebar = build_sidebar(sitemap, current_rel)
-    match = re.search(r"<body[^>]*>", html, re.IGNORECASE)
+    # Insert right after the <body> tag. Anchor it to </head> so the search
+    # can never match a literal "<body>" inside inlined CSS or a comment.
+    match = re.search(r"</head>\s*<body[^>]*>", html, re.IGNORECASE)
     if match:
         html = html[: match.end()] + sidebar + html[match.end():]
     else:
-        html = sidebar + html
+        match = re.search(r"<body[^>]*>", html, re.IGNORECASE)
+        if match:
+            html = html[: match.end()] + sidebar + html[match.end():]
+        else:
+            html = sidebar + html
 
     # Wrap the body text in the central cream text box (see style.css).
     html = wrap_content(html)

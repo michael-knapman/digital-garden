@@ -10,7 +10,7 @@
 
 <link rel="preload" as="image" href="assets/TtownV4_50.webp"
           imagesrcset="assets/TtownV4_50-640.webp 640w, assets/TtownV4_50-960.webp 960w, assets/TtownV4_50.webp 1237w"
-          imagesizes="(min-width: 1200px) 860px, (min-width: 700px) 80vw, 88vw" fetchpriority="high">
+          imagesizes="(min-width: 1200px) calc(92vw - 356px), (min-width: 700px) 80vw, 88vw" fetchpriority="high">
     <style>
         body {
             font-family: sans-serif;
@@ -82,7 +82,18 @@
     </style>
 <!-- BEGINSIDEBAR:CSS -->
 <link rel="icon" href="/favicon.ico">
-<style id="site-css">body {
+<style id="site-css">/* Browsers default to an 8px margin on the body element; zero it so the
+   mobile topbar sits flush with the top and spans the full viewport width
+   (no background strip peeking above/right of it on iOS Safari).
+   On desktop the sidebar's injected "margin-left: var(--sidebar-width)"
+   overrides the left side, keeping the fixed sidebar layout. */
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
     background-image: url(/assets/tamagotchi_fabric_by_cloverwing.webp);
     background-repeat: repeat;
     background-size: auto;
@@ -316,7 +327,7 @@ aside.sidebar {
         <div class="ttown-map" aria-label="Interactive map of TamaTown">
             <img src="assets/TtownV4_50.webp"
                  srcset="assets/TtownV4_50-640.webp 640w, assets/TtownV4_50-960.webp 960w, assets/TtownV4_50.webp 1237w"
-                 sizes="(min-width: 1200px) 860px, (min-width: 700px) 80vw, 88vw"
+                 sizes="(min-width: 1200px) calc(92vw - 356px), (min-width: 700px) 80vw, 88vw"
                  width="1237" height="824" fetchpriority="high"
                  alt="A hand-drawn map of TamaTown. Each building is a link to a section of the site.">
             <!--
