@@ -5,8 +5,82 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Siivagunner</title>
+    <meta name="description" content="A shrine to Siivagunner: the discovery story, a hall of fame of rips and lists of silly ideas.">
 <!-- BEGINSIDEBAR:CSS -->
-<link rel="stylesheet" href="style.css">
+<link rel="icon" href="/favicon.ico">
+<style id="site-css">body {
+    background-image: url(/assets/tamagotchi_fabric_by_cloverwing.webp);
+    background-repeat: repeat;
+    background-size: auto;
+}
+
+* {
+    cursor: url(/assets/cursor_tamagotchi_connection_3_ice_cream.png) 0 0, auto;
+}
+
+/*
+    Central text box, injected around every page's body by build_site.py
+    (see the wrap_content function there).
+    The box stretches with the viewport:
+      - width is a fraction of the viewport (minus a small side strip)
+      - height is at least ~90% of the viewport height
+    The pattern background stays visible on all four sides, and the visible
+    strips shrink as the viewport shrinks because the margins are in vw/vh
+    units (smaller viewport -> smaller margins).
+*/
+main.content-box {
+    box-sizing: border-box;
+    width: calc(100% - 8vw);          /* 4vw of pattern left + 4vw right */
+    min-height: calc(100vh - 10vh);   /* 5vh of pattern top + 5vh bottom */
+    margin: 5vh auto;                 /* centers the box horizontally */
+    padding: clamp(20px, 4vw, 48px);  /* padding grows with the viewport too */
+    background-color: #fff7e2;
+    color: #3a3526;
+    border: 1px solid #e8d8a8;
+    border-radius: 8px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
+}
+
+/*
+    Styling for content generated from content/*.md by build_site.py:
+    the <h1> heading, prose paragraphs, lists and markdown tables.
+*/
+main.content-box h1 {
+    margin-top: 0;
+    margin-bottom: 0.6em;
+    font-size: 1.6em;
+    color: #2c4a2e;  /* muted green, fits the cream/leafy background */
+}
+
+main.content-box a {
+    color: #224a77;  /* same link blue as the sidebar */
+}
+
+/*
+    Links inside content lists get a generous line box and spacing so the
+    click/tap target is at least ~24px tall (Lighthouse target-size audit).
+*/
+main.content-box ul li {
+    line-height: 1.9;
+    margin: 5px 0;
+}
+
+main.content-box table {
+    border-collapse: collapse;
+    margin: 10px 0;
+}
+
+main.content-box th,
+main.content-box td {
+    border: 1px solid #e8d8a8;
+    padding: 4px 10px;
+    text-align: left;
+}
+
+main.content-box thead th {
+    background-color: #f3ead1;
+    font-weight: bold;
+}</style>
 <style id="sidebar-css">
 /* Injected by build_site.py - do not edit by hand, re-run the build instead. */
 :root {
@@ -39,7 +113,7 @@ aside.sidebar {
     padding-left: 14px;
 }
 .sidebar-nav li {
-    margin: 4px 0;
+    margin: 6px 0;
 }
 .sidebar-nav li.group > span {
     display: block;
@@ -51,7 +125,8 @@ aside.sidebar {
 }
 .sidebar-nav a {
     display: block;
-    padding: 4px 8px;
+    padding: 7px 8px;
+    line-height: 1.2;
     color: #224a77;
     text-decoration: none;
     border-radius: 4px;
@@ -121,10 +196,10 @@ aside.sidebar {
         padding-left: 12px;
     }
     .sidebar-nav li {
-        margin: 2px 0;
+        margin: 4px 0;
     }
     .sidebar-nav a {
-        padding: 3px 6px;
+        padding: 6px 6px;
         font-size: 13px;
     }
     .sidebar-foot {
@@ -163,7 +238,7 @@ aside.sidebar {
         </ul>
     </nav>
     <div class="sidebar-foot">
-        <a href="https://nekoweb.org/"><img src="https://nekoweb.org/assets/buttons/button1.gif" alt="Nekoweb"></a>
+        <a href="https://nekoweb.org/"><img src="https://nekoweb.org/assets/buttons/button1.gif" width="88" height="31" alt="Nekoweb"></a>
         <p>Copyright © 2026 Michael Knapman. All Rights Reserved.</p>
     </div>
 </aside>

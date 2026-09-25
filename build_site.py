@@ -61,6 +61,7 @@ If you add, rename or remove a page, just run the build again.
 The injected markup is pure HTML + CSS. No JavaScript is used anywhere.
 """
 
+import html as htmlmod
 import pathlib
 import posixpath
 import re
@@ -94,7 +95,8 @@ GENERATED_RE = re.compile(
 
 STICKER = (
     '<a href="https://nekoweb.org/">'
-    '<img src="https://nekoweb.org/assets/buttons/button1.gif" alt="Nekoweb">'
+    '<img src="https://nekoweb.org/assets/buttons/button1.gif" '
+    'width="88" height="31" alt="Nekoweb">'
     "</a>"
 )
 COPYRIGHT = "Copyright © 2026 Michael Knapman. All Rights Reserved."
@@ -143,7 +145,7 @@ aside.sidebar {
     padding-left: 14px;
 }
 .sidebar-nav li {
-    margin: 4px 0;
+    margin: 6px 0;
 }
 .sidebar-nav li.group > span {
     display: block;
@@ -155,7 +157,8 @@ aside.sidebar {
 }
 .sidebar-nav a {
     display: block;
-    padding: 4px 8px;
+    padding: 7px 8px;
+    line-height: 1.2;
     color: #224a77;
     text-decoration: none;
     border-radius: 4px;
@@ -225,10 +228,10 @@ aside.sidebar {
         padding-left: 12px;
     }
     .sidebar-nav li {
-        margin: 2px 0;
+        margin: 4px 0;
     }
     .sidebar-nav a {
-        padding: 3px 6px;
+        padding: 6px 6px;
         font-size: 13px;
     }
     .sidebar-foot {
@@ -534,17 +537,159 @@ def build_sidebar(sitemap, current_rel):
 
 
 def build_css_block(cur_dir):
-    """The injected head block: site stylesheet link + sidebar CSS.
+    """The injected head block: favicon + inline site CSS + sidebar CSS.
 
-    The stylesheet link is written relative to the page's own folder so
-    pages in subfolders (e.g. technical/codecs.html) resolve it too.
+    style.css is inlined rather than <link>ed because it is tiny: inlining
+    removes a render-blocking network request (a PageSpeed recommendation).
+    The inlined copy lives inside the page, so url(assets/...) references in
+    it would resolve relative to the page's folder; they are rewritten to
+    root-absolute /assets/... paths, which work from any page depth. The
+    favicon link (also injected here) stops browsers from 404-ing on the
+    default /favicon.ico request.
     """
+    site_css = (PUBLIC / "style.css").read_text(encoding="utf-8")
+    site_css = re.sub(r"url\(\s*assets/", "url(/assets/", site_css)
     return (
         f"<!-- {CSS_MARKER_START} -->\n"
-        f'<link rel="stylesheet" href="{rel_href(cur_dir, "style.css")}">\n'
+        f'<link rel="icon" href="/favicon.ico">\n'
+        f"<style id=\"site-css\">{site_css}</style>\n"
         f"<style id=\"sidebar-css\">{SIDEBAR_CSS}</style>\n"
         f"<!-- {CSS_MARKER_END} -->\n"
     )
+
+
+DESCRIPTION_MAX = 158
+
+# Curated meta descriptions for pages whose body text is not self-descriptive
+# (landing pages with plain link lists, the home page, error/secret pages).
+# Keys are paths relative to public/. Every other page gets an automatic
+# description built from its own first paragraph.
+PAGE_DESCRIPTIONS = {
+    "index.html": (
+        "Michael Knapman's personal corner of the web: enter TamaTown and click "
+        "a building to explore selected works, short stories, shrines, Siivagunner "
+        "lore and technical notes."
+    ),
+    "cool_stuff.html": (
+        "Cool stuff Michael Knapman likes: quirky, interesting websites and fun "
+        "links from around the web."
+    ),
+    "credits.html": (
+        "Credits for michael.nekoweb.org: background art, the tools used to build "
+        "the site, and the websites that inspired it."
+    ),
+    "selected-works.html": (
+        "Works Michael Knapman admires: Capcom, Game Freak & the Pokémon Company, "
+        "HAL Laboratory, Em Essex, Tim Follin and more."
+    ),
+    "short-story.html": (
+        "Short stories and essays by Michael Knapman: an ode to adventure, the "
+        "copper age collapse, maize, financial risks and more."
+    ),
+    "housekeeping.html": (
+        "Housekeeping notes for michael.nekoweb.org: how this site is built, its "
+        "AI use policy and inspiration."
+    ),
+    "siivagunner.html": (
+        "A shrine to Siivagunner: the discovery story, a hall of fame of rips and "
+        "lists of silly ideas."
+    ),
+    "shrines.html": (
+        "Shrines: things Michael Knapman finds interesting, including Ken Sugimori "
+        "and early Pokémon artwork."
+    ),
+    "shrines/ken-sugimori.html": (
+        "A shrine to Ken Sugimori and his early Pokémon artwork: the hand-painted "
+        "watercolor era of the original 151."
+    ),
+    "technical.html": (
+        "Technical notes by Michael Knapman: video and audio codecs, ETFs, USB, "
+        "Wi-Fi and toothbrushes."
+    ),
+    "not_found.html": (
+        "404 - page not found on michael.nekoweb.org. Head back to the home page."
+    ),
+    "unlisted/boo.html": (
+        "A spooky secret page hidden on Michael Knapman's website. Boo!"
+    ),
+}
+
+META_DESC_RE = re.compile(
+    r'<meta\s+name=["\']description["\']\s+content=["\'][^"]*["\']\s*/?>',
+    re.IGNORECASE,
+)
+
+
+def escape_attr(text):
+    """Escape text so it is safe inside a double-quoted HTML attribute."""
+    return escape_html(text).replace('"', "&quot;")
+
+
+def auto_description(html, rel_path):
+    """Build a meta description from the page's own first real paragraph.
+
+    Only looks at the body text (never the injected sidebar), skips filler
+    paragraphs shorter than 15 chars, and prefixes the page title.
+    """
+    title = extract_title(html, posixpath.basename(rel_path))
+    # Never describe the page from the injected sidebar/audio blocks.
+    body = strip_block(html, SIDEBAR_MARKER_START, SIDEBAR_MARKER_END)
+    match = re.search(r"<main[^>]*>(.*?)</main>", body, re.DOTALL)
+    if match:
+        body = match.group(1)
+    for para in re.findall(r"<p[^>]*>(.*?)</p>", body, re.DOTALL):
+        text = re.sub(r"<[^>]+>", " ", para)
+        text = htmlmod.unescape(text)
+        # The markdown converter stores some line breaks as &lt;br&gt;
+        # entities; sweep up any tag-like leftovers revealed by unescaping.
+        text = re.sub(r"<[^>]*>", " ", text)
+        text = re.sub(r"\s+", " ", text).strip()
+        if len(text) >= 15:
+            snippet = f"{title} - {text}" if title else text
+            if len(snippet) > DESCRIPTION_MAX:
+                snippet = snippet[: DESCRIPTION_MAX - 1].rstrip() + "…"
+            return snippet
+    return (title or posixpath.basename(rel_path))[:DESCRIPTION_MAX]
+
+
+def collapse_head_blanks(html):
+    """Collapse runs of blank lines inside <head>, outside <style> blocks.
+
+    Removes the whitespace crumbs that older build versions left behind when
+    replacing the meta description, without touching the hand-written CSS
+    inside <style>.</style> tags.
+    """
+    match = re.search(r"<head[^>]*>(.*?)</head>", html, re.IGNORECASE | re.DOTALL)
+    if not match:
+        return html
+    head = match.group(1)
+    parts = re.split(r"(<style[^>]*>.*?</style>)", head, re.IGNORECASE | re.DOTALL)
+    for i in range(0, len(parts), 2):
+        parts[i] = re.sub(r"\n(?:[ \t]*\n)+", "\n\n", parts[i])
+    return html[: match.start(1)] + "".join(parts) + html[match.end(1):]
+
+
+def inject_meta_description(html, current_rel):
+    """Replace any existing description meta tag with a generated one.
+
+    Idempotent: every existing description tag is removed first and blank
+    line crumbs left behind in the head are collapsed, then a single fresh
+    tag is inserted after <title>.
+    """
+    html = META_DESC_RE.sub("", html)
+    html = collapse_head_blanks(html)
+    description = PAGE_DESCRIPTIONS.get(
+        current_rel, auto_description(html, current_rel)
+    )
+    meta = f'<meta name="description" content="{escape_attr(description)}">\n'
+    match = re.search(r"</title>", html, re.IGNORECASE)
+    if match:
+        html = html[: match.end()] + "\n    " + meta + html[match.end():]
+    elif "</head>" in html:
+        html = html.replace("</head>", meta + "</head>", 1)
+    else:
+        html = meta + html
+    return html
 
 
 def inject_into_page(html, current_rel, sitemap):
@@ -566,6 +711,9 @@ def inject_into_page(html, current_rel, sitemap):
 
     # Wrap the body text in the central cream text box (see style.css).
     html = wrap_content(html)
+
+    # Per-page SEO meta description (curated map or auto-generated).
+    html = inject_meta_description(html, current_rel)
 
     return normalize_marker_spacing(html)
 

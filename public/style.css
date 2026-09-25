@@ -46,6 +46,15 @@ main.content-box a {
     color: #224a77;  /* same link blue as the sidebar */
 }
 
+/*
+    Links inside content lists get a generous line box and spacing so the
+    click/tap target is at least ~24px tall (Lighthouse target-size audit).
+*/
+main.content-box ul li {
+    line-height: 1.9;
+    margin: 5px 0;
+}
+
 main.content-box table {
     border-collapse: collapse;
     margin: 10px 0;
